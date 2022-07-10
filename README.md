@@ -2,6 +2,9 @@
 
 Written for Elements of Software Construction, Summer 2022 by Joshua Ng, 1005285.
 
+## Use Case Diagram
+<img src=https://github.com/brutatoasta/escsubmission/blob/main/wk8_use_case_diagram.jpg >
+
 ## Caveats
 Apple.java main function takes 2 CSV files and makes 2 hashsets each, before removing all duplicate entries from each other, to each other. This leaves the unique entries of each csv file, and we write that to a new csv file.
 Obviously, this is in no way optimised. 
