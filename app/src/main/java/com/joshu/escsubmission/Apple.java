@@ -1,5 +1,7 @@
 package com.joshu.escsubmission;
 
+import static java.lang.System.exit;
+
 import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.File;
@@ -9,34 +11,58 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 
 public class Apple {
     public static void main(String[] args) {
-        String rawfile1 = "C:\\Users\\joshu\\Documents\\Github\\escsubmission\\sample_file_1.csv";
-        String rawfile2 = "C:\\Users\\joshu\\Documents\\Github\\escsubmission\\sample_file_3.csv";
-        String output = "C:\\Users\\joshu\\Documents\\Github\\escsubmission\\help.csv";
-        // Uses the sample files and default output by default unless input and output files are specified in the arguments
-        if (args.length > 0) rawfile1 = args[0];
-        if (args.length > 1) rawfile2 = args[1];
-        if (args.length > 2) output = args[2];
+        String rawfile1=null;
+        String rawfile2=null;
+
+        // Uses system time to differentiate between new files if running on the same inputs
+        String output = String.valueOf(System.currentTimeMillis());
+        // Requires CLI arguments of the paths of 2 CSV files and the directory where you the exceptions csv can be recorded
+        if (args.length == 3) {
+            rawfile1 = args[0];
+            rawfile2 = args[1];
+            output = args[2] + "\\" + output + ".csv";
+        }
+        else{
+            // wrong number of arguments
+            exit(100);
+        }
+
         try{
+            File csvOutputFile = new File(output);
+            csvOutputFile.createNewFile(); //check if file created already, if not, creates it
             HashSet<String> f1 = new HashSet<>(readCSV(rawfile1));
             HashSet<String> f2 = new HashSet<>(readCSV(rawfile1));
             HashSet<String> f3 = new HashSet<>(readCSV(rawfile2));
             HashSet<String> f4 = new HashSet<>(readCSV(rawfile2));
-            f3.removeAll(f1); // f2 now contains only the lines which are not in f1
-            f2.removeAll(f4);
-            File csvOutputFile = new File(output);
-            writeCSV(f3, csvOutputFile);
+            f3.removeAll(f1); // f3 now contains only the lines which are not in f1
+            f2.removeAll(f4); // f2 now contains only the lines which are not in f4
+
+            writeCSV(f3, csvOutputFile); // write to file
             writeCSV(f2, csvOutputFile);
+        }
+        catch (IOException e){
+            System.out.println(e.getMessage());
         }
         finally{}
 
     }
-    public static void writeCSV(HashSet f, File file){
+
+    /**
+     * Appends to a specified CSV file from a Hashset of Strings passed to it. Does not overwrite.
+     * PrintWriter implements AutoCloseable so I don't have to close it.
+     *
+     * @param f
+     * @param file
+     * @throws FileNotFoundException
+     */
+    public static void writeCSV(HashSet f, File file) throws FileNotFoundException{
         Iterator<String> it = f.iterator();
         try (PrintWriter pw = new PrintWriter(new FileOutputStream(file, true))){
             while (it.hasNext()){
@@ -46,10 +72,18 @@ public class Apple {
         }
         catch (FileNotFoundException e) {
             System.out.println(e.getMessage());
+            // since i already know why it could be thrown, i don't print the whole stack trace
         }
 
     }
-    public static ArrayList<String> readCSV(String filename) {
+
+    /**
+     * Reads a CSV file and returns an ArrayList of Strings for each line.
+     *
+     * @param filename
+     * @return
+     */
+    public static ArrayList<String> readCSV(String filename) throws FileNotFoundException {
         File file= new File(filename);
         ArrayList<String> result = new ArrayList<>();
         // read the file
