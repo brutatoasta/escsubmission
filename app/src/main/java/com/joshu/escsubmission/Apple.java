@@ -30,8 +30,11 @@ public class Apple {
             output = args[2] + "\\" + output + ".csv";
         }
         else{
-            // wrong number of arguments
-            exit(100);
+            // Invalid arguments, print error message
+            System.out.println("Invalid Arguments. Run the program as: ");
+            System.out.println("java Apple.java <first.csv> <second.csv> <output directory>");
+            System.out.println("Ensure the output directory exists before running this program.");
+            exit(1);
         }
 
         try{
@@ -46,12 +49,15 @@ public class Apple {
 
             writeCSV(f3, csvOutputFile); // write to file
             writeCSV(f2, csvOutputFile);
+            // print success message
+            System.out.println("\nSuccess!");
+            System.out.println("File written at: " + csvOutputFile.getAbsolutePath());
         }
         catch (IOException e){
             System.out.println(e.getMessage());
+            System.out.println("Invalid file path");
         }
         finally{}
-
     }
 
     /**
@@ -63,7 +69,7 @@ public class Apple {
      * @throws FileNotFoundException
      */
     public static void writeCSV(HashSet f, File file) throws FileNotFoundException{
-        Iterator<String> it = f.iterator();
+        Iterator it = f.iterator();
         try (PrintWriter pw = new PrintWriter(new FileOutputStream(file, true))){
             while (it.hasNext()){
                 String line = it.next() + "\n";
@@ -74,7 +80,6 @@ public class Apple {
             System.out.println(e.getMessage());
             // since i already know why it could be thrown, i don't print the whole stack trace
         }
-
     }
 
     /**
@@ -101,7 +106,6 @@ public class Apple {
             String line = br.readLine();
             while (line!= null) {
                 result.add(line);
-
                 line = br.readLine();
             }
             br.close();
