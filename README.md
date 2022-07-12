@@ -33,3 +33,5 @@ and AS refuses to run java files independently (see: https://stackoverflow.com/q
 
 ## Acknowledgements
 Referenced file reading from Term 4's SAT solver, and the idea to use hashset comes from here: https://stackoverflow.com/questions/10864654/comparing-two-csv-files-in-java
+
+Referenced file copying from [Baeldung](https://www.baeldung.com/java-copy-file)
