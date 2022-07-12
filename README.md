@@ -1,7 +1,8 @@
 # escsubmission
 
 Written for Elements of Software Construction, Summer 2022 by Joshua Ng, 1005285.
-[Apple.java](../main/app/src/main/java/com/joshu/escsubmission/Apple.java) takes 2 CSV files and makes 2 hashsets each, before removing all duplicate entries from each other, to each other. This leaves the unique entries of each csv file, and we write that to a new csv file.
+
+[Apple.java](../main/app/src/main/java/com/joshu/escsubmission/Apple.java) takes 2 CSV files and makes 2 hashsets each, before removing all duplicate entries from each other, to each other. This leaves the unique entries of each CSV file, and we write that to a new CSV file.
 
 ## Use Case Diagram
 <img src=https://github.com/brutatoasta/escsubmission/blob/main/wk8_use_case_diagram.jpg >
@@ -15,9 +16,13 @@ For example, the file structure can look like this:
 <img src=https://github.com/brutatoasta/escsubmission/blob/main/tree.png>
 
 And the command can look like this: 
+```
 java Apple.java sample_file_1.csv sample_file_3.csv output
+```
 or
+```
 java Apple.java C:\\Users\\joshu\\Documents\\Github\\escsubmission\\sample_file_1.csv C:\\Users\\joshu\\Documents\\Github\\escsubmission\\sample_file_3.csv C:\\Users\\joshu\\Documents\\Github\\escsubmission\\output
+```
 
 ## Caveats
 Obviously, this is in no way optimised.
