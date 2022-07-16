@@ -11,10 +11,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
-
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Iterator;
 
 public class Apple {
     public static void main(String[] args) {
@@ -39,16 +37,23 @@ public class Apple {
 
         try{
             File csvOutputFile = new File(output);
-            csvOutputFile.createNewFile(); //check if file created already, if not, creates it
-            HashSet<String> f1 = new HashSet<>(readCSV(rawfile1));
-            HashSet<String> f2 = new HashSet<>(readCSV(rawfile1));
-            HashSet<String> f3 = new HashSet<>(readCSV(rawfile2));
-            HashSet<String> f4 = new HashSet<>(readCSV(rawfile2));
+            if (!csvOutputFile.createNewFile()){
+                //check if file created already, if not, creates it
+                System.out.println("File already exists, please clean directory");
+                exit(1);
+            }
+            ArrayList<String> arr1 = readCSV(rawfile1);
+            ArrayList<String> arr2 = readCSV(rawfile2);
+            assert arr1 != null;
+            HashSet<String> f1 = new HashSet<>(arr1);
+            HashSet<String> f2 = new HashSet<>(arr1);
+            assert arr2 != null;
+            HashSet<String> f3 = new HashSet<>(arr2);
+            HashSet<String> f4 = new HashSet<>(arr2);
             f3.removeAll(f1); // f3 now contains only the lines which are not in f1
             f2.removeAll(f4); // f2 now contains only the lines which are not in f4
 
-            writeCSV(f3, csvOutputFile); // write to file
-            writeCSV(f2, csvOutputFile);
+            writeCSV(csvOutputFile, f3, f2); // write to file
             // print success message
             System.out.println("\nSuccess!");
             System.out.println("File written at: " + csvOutputFile.getAbsolutePath());
@@ -57,23 +62,24 @@ public class Apple {
             System.out.println(e.getMessage());
             System.out.println("Invalid file path");
         }
-        finally{}
     }
 
     /**
      * Appends to a specified CSV file from a Hashset of Strings passed to it. Does not overwrite.
      * PrintWriter implements AutoCloseable so I don't have to close it.
      *
-     * @param f
-     * @param file
-     * @throws FileNotFoundException
+     * @param file Specified CSV file object
+     * @param args Arbitrary number of Hashsets to write to file
+     * @throws FileNotFoundException thrown if file not found or file permission is lacking
      */
-    public static void writeCSV(HashSet f, File file) throws FileNotFoundException{
-        Iterator it = f.iterator();
+    public static void writeCSV(File file, HashSet ... args) throws FileNotFoundException{
+
         try (PrintWriter pw = new PrintWriter(new FileOutputStream(file, true))){
-            while (it.hasNext()){
-                String line = it.next() + "\n";
-                pw.write(line);
+            for (HashSet f : args){
+                for (Object o : f) {
+                    String line = o + "\n";
+                    pw.write(line);
+                }
             }
         }
         catch (FileNotFoundException e) {
@@ -85,8 +91,8 @@ public class Apple {
     /**
      * Reads a CSV file and returns an ArrayList of Strings for each line.
      *
-     * @param filename
-     * @return
+     * @param filename Specified CSV file object
+     * @return ArrayList of strings where each element is a line from the csv file
      */
     public static ArrayList<String> readCSV(String filename) throws FileNotFoundException {
         File file= new File(filename);

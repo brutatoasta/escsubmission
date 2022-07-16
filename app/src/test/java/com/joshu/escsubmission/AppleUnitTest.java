@@ -33,7 +33,7 @@ public class AppleUnitTest {
     /**
      * Read a static sample file, check the first row
      *
-     * @throws IOException
+     * @throws IOException file not found or read permission lacking
      */
     @Test
     public void readCSVTest() throws IOException {
@@ -46,14 +46,13 @@ public class AppleUnitTest {
      * Creates a temporary copy of writetest0.csv, with a single entry.
      * Adds 2 lines of entries and check if the hashset that is read back is correct
      *
-     * @throws IOException
+     * @throws IOException file not found or write permission lacking
      */
     @Test
     public void writeCSVTest() throws IOException{
         // copy file
         File copied =  folder.newFile("testTemp.csv");
         String original = "C:\\Users\\joshu\\Documents\\Github\\escsubmission\\writetest0.csv";
-        String intendedfilename = "C:\\Users\\joshu\\Documents\\Github\\escsubmission\\writetest1.csv";
         try (
                 InputStream in = new BufferedInputStream(
                         new FileInputStream(original));
@@ -85,13 +84,15 @@ public class AppleUnitTest {
         }};
 
         // we'll try to add this to writetest0.csv
-        HashSet<String> toAdd = new HashSet<>(){{
-            add("alpha,waymond");
+        HashSet<String> toAdd0 = new HashSet<>(){{
             add("michelle,yeoh");
+        }};
+        HashSet<String> toAdd1 = new HashSet<>(){{
+            add("alpha,waymond");
         }};
 
         // run the function we want to test
-        writeCSV(toAdd, copied);
+        writeCSV(copied,toAdd0, toAdd1);
 
         // time to verify: read the file
         // TODO: very similar code to readCSV function I wrote, is this okay?
