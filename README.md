@@ -7,6 +7,7 @@ Written for Elements of Software Construction, Summer 2022 by Joshua Ng, 1005285
 ## Usage
 Run the program as: 
 java Apple.java [first.csv] [second.csv] [output directory]
+
 Remember to ensure the output directory exists before running this program. If the input files and output directory are in the root directory, then you can use the relative path. Otherwise, it's better to use the absolute path.
 
 For example, the file structure can look like this:
