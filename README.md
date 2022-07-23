@@ -68,6 +68,13 @@ Boundaries:
 Middle: 
 
 - File cannot be created e.g. abort write
+## Testing
+Unit tests have been written in [AppleUnitTest.java](https://github.com/brutatoasta/escsubmission/tree/main/app/src/test/java/com/joshu/escsubmission). Similar to Apple.java, navigate to the test directory and run the unit tests with the following command:
+```
+java AppleUnitTest.java 
+```
+
+Each method tests the reading and writing methods in Apple.java.
 
 ## Acknowledgements
 Referenced file reading from Term 4's SAT solver, and the idea to use hashset comes from here: https://stackoverflow.com/questions/10864654/comparing-two-csv-files-in-java
