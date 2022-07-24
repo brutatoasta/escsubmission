@@ -2,7 +2,7 @@
 
 Written for Elements of Software Construction, Summer 2022 by Joshua Ng, 1005285.
 
-[Apple.java](../main/app/src/main/java/com/joshu/escsubmission/Apple.java) takes 2 CSV files and makes 2 hashsets each, before removing all duplicate entries from each other, to each other. This leaves the unique entries of each CSV file, and we write that to a new CSV file.
+[Apple.java](https://github.com/brutatoasta/escsubmission/blob/main/ApplePackage/Apple.java) takes 2 CSV files and makes 2 hashsets each, before removing all duplicate entries from each other, to each other. This leaves the unique entries of each CSV file, and we write that to a new CSV file.
 
 ## Usage
 Run the program as: 
