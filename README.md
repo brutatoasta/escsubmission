@@ -46,13 +46,16 @@ Boundaries:
 - Not a comma separated value file, e.g. a password protected excel file
 - Invalid text encoding e.g. not UTF-8 as Apple.java is not configured for other text encoding
 - Empty CSV file
-- Columns are swapped
 
 **Valid files:**
 
 Boundaries:
 - No header row
 - Identical columns
+
+### Finding differences
+**Invalid**
+- Columns are swapped
 
 ### Writing files
 **Invalid output path**
@@ -69,14 +72,34 @@ Middle:
 
 - File cannot be created e.g. abort write
 ## Testing
-Unit tests have been written in [AppleUnitTest.java](https://github.com/brutatoasta/escsubmission/tree/main/app/src/test/java/com/joshu/escsubmission). Similar to Apple.java, navigate to the test directory and run the unit tests with the following command:
+Unit tests have been written in [AppleUnitTest.java](https://github.com/brutatoasta/escsubmission/tree/main/app/src/test/java/com/joshu/escsubmission). To facilitate easy compiling and testing, Apple.java, AppleUnitTest.java and junit.jar files have been included in a directory called ApplePackage.
+To compile the files, navigate there and run the following command.
 ```
-java AppleUnitTest.java 
+javac -d bin -cp lib/junit-4.13.2.jar; lib/hamcrest-core-1.3.jar;. AppleUnitTest.java Apple.java   
 ```
+To run the compiled files, navigate to ./bin and run the following command.
+```
+java -cp ../lib/junit-4.13.2.jar;../lib/hamcrest-core-1.3.jar;. org.junit.runner.JUnitCore ApplePackage.AppleUnitTest
+```
+You should see a similar output:
+```
+JUnit version 4.13.2
+..
+Time: 0.065
 
+OK (4 tests)
+```
 Each method tests the reading and writing methods in Apple.java.
 
 ## Acknowledgements
 Referenced file reading from Term 4's SAT solver, and the idea to use hashset comes from here: https://stackoverflow.com/questions/10864654/comparing-two-csv-files-in-java
 
 Referenced file copying from [Baeldung](https://www.baeldung.com/java-copy-file)
+
+## Notes
+How to get current working directory:
+```
+File phi = new File("");
+String phipath = phi.getAbsolutePath();
+System.out.println(phipath);
+```
